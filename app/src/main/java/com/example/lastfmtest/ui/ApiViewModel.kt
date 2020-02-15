@@ -3,6 +3,7 @@ package com.example.lastfmtest.ui
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.example.lastfmtest.R
 import com.example.lastfmtest.base.BaseViewModel
 import com.example.lastfmtest.network.Api
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,10 +16,14 @@ class ApiViewModel():BaseViewModel() {
     lateinit var api: Api
     private lateinit var subscription: Disposable
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val errorMessage:MutableLiveData<Int> = MutableLiveData()
+    val errorClickListener = View.OnClickListener { loadArtists() }
 
     init{
         loadArtists()
     }
+
+
 
     override fun onCleared() {
         super.onCleared()
@@ -44,6 +49,8 @@ class ApiViewModel():BaseViewModel() {
 
     private fun onStart(){
         loadingVisibility.value = View.VISIBLE
+        errorMessage.value = null
+
     }
 
     private fun onFinish(){
@@ -55,7 +62,7 @@ class ApiViewModel():BaseViewModel() {
     }
 
     private fun onError(){
-
+        errorMessage.value = R.string.error
     }
 
 }
