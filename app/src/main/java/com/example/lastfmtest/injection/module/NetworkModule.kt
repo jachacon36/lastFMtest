@@ -9,6 +9,10 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+
+
 
 @Module
 // Safe here as we are dealing with a Dagger 2 module
@@ -36,8 +40,15 @@ object NetworkModule {
     internal fun provideRetrofitInterface(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(interceptor())
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
+    }
+
+    internal fun interceptor(): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder().addInterceptor(interceptor).build()
     }
 }

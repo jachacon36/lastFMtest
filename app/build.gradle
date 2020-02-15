@@ -19,6 +19,16 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+    androidExtensions {
+        experimental = true
+        features = ["parcelize"]
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,7 +48,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // LiveData & ViewModel
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     // Room
     implementation 'androidx.room:room-runtime:2.2.3'
@@ -64,5 +74,7 @@ dependencies {
 
     // Data binding
     kapt 'androidx.databinding:databinding-compiler:3.5.3'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
 }

@@ -1,5 +1,6 @@
 package com.example.lastfmtest.ui
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.lastfmtest.base.BaseViewModel
@@ -25,13 +26,18 @@ class ApiViewModel():BaseViewModel() {
     }
 
     private fun loadArtists() {
-        subscription = api.getArtists()
+        subscription = api.getArtists("geo.gettopartists",
+                                                "spain",
+                                                "829751643419a7128b7ada50de590067",
+                                                "json",
+                                                "1"
+            )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onStart() }
             .doOnTerminate { onFinish() }
             .subscribe(
-                { onSuccess() },
+                {result-> onSuccess(result) },
                 { onError() }
             )
     }
@@ -44,8 +50,8 @@ class ApiViewModel():BaseViewModel() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun onSuccess(){
-
+    private fun onSuccess(result:String){
+        Log.e("Result", result)
     }
 
     private fun onError(){

@@ -1,3 +1,3 @@
 package com.example.lastfmtest.utils
 
-const val BASE_URL: String = "http://ws.audioscrobbler.com"
+const val BASE_URL: String = "https://ws.audioscrobbler.com"
