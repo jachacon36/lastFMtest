@@ -1,4 +1,4 @@
-package com.example.lastfmtest.injection
+package com.example.lastfmtest.injection.module
 
 import com.example.lastfmtest.network.Api
 import com.example.lastfmtest.utils.BASE_URL
