@@ -5,23 +5,33 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.lastfmtest.R
 import com.example.lastfmtest.base.BaseViewModel
+import com.example.lastfmtest.model.geoTopArtists
 import com.example.lastfmtest.network.Api
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import javax.inject.Inject
 
 class ApiViewModel():BaseViewModel() {
     @Inject
     lateinit var api: Api
     private lateinit var subscription: Disposable
+    private lateinit var topArtists : geoTopArtists
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadArtists() }
+    val artistAdapter: ArtistsAdapter = ArtistsAdapter()
+    var gson : Gson = Gson()
+
 
     init{
         loadArtists()
     }
+
 
 
 
@@ -57,8 +67,14 @@ class ApiViewModel():BaseViewModel() {
         loadingVisibility.value = View.GONE
     }
 
-    private fun onSuccess(result:String){
-        Log.e("Result", result)
+    private fun onSuccess(result: ResponseBody){
+        val obj = JSONObject(result.string())
+        val gsonBuilder = GsonBuilder()
+        gsonBuilder.setDateFormat("M/d/yy hh:mm a")
+        gson = gsonBuilder.create()
+        topArtists = gson.fromJson(obj.toString(), geoTopArtists::class.java)
+        Log.e("Response", topArtists.topartists.artist.get(0).name)
+        artistAdapter.updatePostList(topArtists)
     }
 
     private fun onError(){
