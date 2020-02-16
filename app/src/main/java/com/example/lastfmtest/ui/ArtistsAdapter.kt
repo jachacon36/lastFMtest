@@ -1,7 +1,6 @@
 package com.example.lastfmtest.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lastfmtest.R
 import com.example.lastfmtest.databinding.ItemArtistBinding
 import com.example.lastfmtest.model.Artist
-import com.example.lastfmtest.model.geoTopArtists
 import com.squareup.picasso.Picasso
 
 class ArtistsAdapter: RecyclerView.Adapter<ArtistsAdapter.ViewHolder>() {

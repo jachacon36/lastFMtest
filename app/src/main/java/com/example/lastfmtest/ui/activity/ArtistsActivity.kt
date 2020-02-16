@@ -1,4 +1,4 @@
-package com.example.lastfmtest
+package com.example.lastfmtest.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lastfmtest.R
 import com.example.lastfmtest.databinding.ActivityMainBinding
 import com.example.lastfmtest.ui.ApiViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -31,7 +32,9 @@ class ArtistsActivity : AppCompatActivity() {
     }
 
     private fun createDataBinding(){
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this,
+            R.layout.activity_main
+        )
     }
 
     private fun createRecyclerView(){

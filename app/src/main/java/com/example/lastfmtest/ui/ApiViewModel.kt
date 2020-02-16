@@ -4,7 +4,8 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.lastfmtest.R
 import com.example.lastfmtest.base.BaseViewModel
-import com.example.lastfmtest.model.geoTopArtists
+import com.example.lastfmtest.model.GeoTopArtists
+import com.example.lastfmtest.model.database.GeoArtistsDao
 import com.example.lastfmtest.network.Api
 import com.example.lastfmtest.utils.*
 import com.google.gson.Gson
@@ -16,11 +17,11 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 import javax.inject.Inject
 
-class ApiViewModel():BaseViewModel() {
+class ApiViewModel(private val geogeoArtistsDao: GeoArtistsDao):BaseViewModel() {
     @Inject
     lateinit var api: Api
     private lateinit var subscription: Disposable
-    private lateinit var topArtists : geoTopArtists
+    private lateinit var topArtists : GeoTopArtists
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadArtists(false) }
@@ -63,7 +64,7 @@ class ApiViewModel():BaseViewModel() {
     }
 
     private fun onSuccess(result: ResponseBody){
-        topArtists = gson.fromJson(createJSONObject(result), geoTopArtists::class.java)
+        topArtists = gson.fromJson(createJSONObject(result), GeoTopArtists::class.java)
         totalPages.value = topArtists.topartists.attrObject.totalPages.toInt()
         pageCurrent.value=topArtists.topartists.attrObject.page.toInt()
         artistAdapter.updatePostList(topArtists.topartists.artist)
