@@ -78,6 +78,10 @@ dependencies {
     // Support Design
     implementation 'com.google.android.material:material:1.1.0'
 
+    //okhttp3
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

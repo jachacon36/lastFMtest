@@ -1,6 +1,5 @@
 package com.example.lastfmtest.ui
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.lastfmtest.R
@@ -26,26 +25,25 @@ class ApiViewModel():BaseViewModel() {
     val errorClickListener = View.OnClickListener { loadArtists() }
     val artistAdapter: ArtistsAdapter = ArtistsAdapter()
     var gson : Gson = Gson()
+    var totalPages: Int = 0
+    var pageCurrent: Int = 1
 
 
     init{
         loadArtists()
     }
 
-
-
-
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
     }
 
-    private fun loadArtists() {
+    fun loadArtists() {
         subscription = api.getArtists("geo.gettopartists",
                                                 "spain",
                                                 "829751643419a7128b7ada50de590067",
                                                 "json",
-                                                "1"
+                                                getPage()
             )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -73,12 +71,20 @@ class ApiViewModel():BaseViewModel() {
         gsonBuilder.setDateFormat("M/d/yy hh:mm a")
         gson = gsonBuilder.create()
         topArtists = gson.fromJson(obj.toString(), geoTopArtists::class.java)
-        Log.e("Response", topArtists.topartists.artist.get(0).name)
-        artistAdapter.updatePostList(topArtists)
+        totalPages = topArtists.topartists.attrObject.totalPages.toInt()
+        artistAdapter.updatePostList(topArtists.topartists.artist)
     }
 
     private fun onError(){
         errorMessage.value = R.string.error
+    }
+
+    private fun getPage():String{
+           when{
+               pageCurrent <= totalPages->{pageCurrent+=1}
+           }
+        return pageCurrent.toString()
+
     }
 
 }

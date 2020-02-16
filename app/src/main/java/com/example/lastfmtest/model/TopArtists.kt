@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class TopArtists (
-    @SerializedName("artist") @Expose val artist: ArrayList<Artist>
+    @SerializedName("artist") @Expose val artist: ArrayList<Artist>,
+    @SerializedName("@attr") @Expose val attrObject: AttrObject
 ): Parcelable

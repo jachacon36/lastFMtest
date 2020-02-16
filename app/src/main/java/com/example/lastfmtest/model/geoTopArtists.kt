@@ -7,6 +7,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class geoTopArtists (
-    @SerializedName("topartists") @Expose val topartists: TopArtists,
-    @SerializedName("@attr") @Expose val attr: Attr_
+    @SerializedName("topartists") @Expose val topartists: TopArtists
 ):Parcelable
