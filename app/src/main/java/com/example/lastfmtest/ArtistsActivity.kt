@@ -2,7 +2,7 @@ package com.example.lastfmtest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -19,24 +19,53 @@ class ArtistsActivity : AppCompatActivity() {
     private lateinit var viewModel: ApiViewModel
     private var errorSnackbar: Snackbar? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createDataBinding()
+        createRecyclerView()
+        createRecyclerViewListeners()
+        createViewModel()
+        createObservers()
+        callArtists()
+
+    }
+
+    private fun createDataBinding(){
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    }
+
+    private fun createRecyclerView(){
         binding.artistList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+    }
+    private fun createRecyclerViewListeners(){
         binding.artistList.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
-                    viewModel.loadArtists()
+                    viewModel.loadArtists(viewModel.oneCall)
+                    Toast.makeText(this@ArtistsActivity, getString(R.string.page,viewModel.getPageCurrent()),Toast.LENGTH_SHORT).show()
                 }
             }
         })
+    }
+
+    private fun createViewModel(){
         viewModel = ViewModelProvider(this).get(ApiViewModel::class.java)
+    }
+
+    private fun createObservers(){
         viewModel.errorMessage.observe(this, Observer {
                 errorMessage -> if(errorMessage != null) showError(errorMessage) else hideError()
         })
+        viewModel.pageCurrent.observe(this, Observer {
+                pageCurrent -> updatePage(pageCurrent)
+        })
         binding.viewModel = viewModel
+    }
+
+    private fun callArtists(){
+        viewModel.loadArtists(viewModel.oneCall)
     }
 
     private fun showError(@StringRes errorMessage:Int){
@@ -47,5 +76,10 @@ class ArtistsActivity : AppCompatActivity() {
 
     private fun hideError(){
         errorSnackbar?.dismiss()
+    }
+
+
+    private fun updatePage(pageCurrent: Int) {
+        viewModel.page = (pageCurrent+1).toString()
     }
 }
