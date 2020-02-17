@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lastfmtest.R
 import com.example.lastfmtest.databinding.ActivityMainBinding
+import com.example.lastfmtest.injection.ViewModelProviderFactory
 import com.example.lastfmtest.ui.ApiViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -54,7 +55,7 @@ class ArtistsActivity : AppCompatActivity() {
     }
 
     private fun createViewModel(){
-        viewModel = ViewModelProvider(this).get(ApiViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelProviderFactory(this)).get(ApiViewModel::class.java)
     }
 
     private fun createObservers(){

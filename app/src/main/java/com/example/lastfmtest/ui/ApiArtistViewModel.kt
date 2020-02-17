@@ -9,10 +9,10 @@ class ApiArtistViewModel: BaseViewModel() {
     private val artistListeners = MutableLiveData<String>()
     private val artistURL = MutableLiveData<String>()
 
-    fun bind(artist: Artist){
-        artistName.value = artist.name
-        artistListeners.value = artist.listeners
-        artistURL.value = artist.url
+    fun bind(artist: Artist?){
+        artistName.value = artist?.name
+        artistListeners.value = artist?.listeners
+        artistURL.value = artist?.url
     }
     fun getArtistName(): MutableLiveData<String>{
         return this.artistName

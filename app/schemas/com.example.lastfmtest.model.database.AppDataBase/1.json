@@ -1,0 +1,64 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "48a3b7441104588c48cefe01a2444627",
+    "entities": [
+      {
+        "tableName": "GeoTopArtists",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `country` TEXT NOT NULL, `page` TEXT NOT NULL, `perPage` TEXT NOT NULL, `totalPages` TEXT NOT NULL, `total` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topartists.attrObject.country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topartists.attrObject.page",
+            "columnName": "page",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topartists.attrObject.perPage",
+            "columnName": "perPage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topartists.attrObject.totalPages",
+            "columnName": "totalPages",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topartists.attrObject.total",
+            "columnName": "total",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48a3b7441104588c48cefe01a2444627')"
+    ]
+  }
+}

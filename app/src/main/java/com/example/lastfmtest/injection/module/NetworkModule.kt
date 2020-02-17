@@ -17,22 +17,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 // Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
 object NetworkModule {
-    /**
-     * Provides the Post service implementation.
-     * @param retrofit the Retrofit object used to instantiate the service
-     * @return the Post service implementation.
-     */
+
     @Provides
     @Reusable
     @JvmStatic
-    internal fun providePostApi(retrofit: Retrofit): Api {
+    internal fun provideApi(retrofit: Retrofit): Api {
         return retrofit.create(Api::class.java)
     }
 
-    /**
-     * Provides the Retrofit object.
-     * @return the Retrofit object
-     */
     @Provides
     @Reusable
     @JvmStatic

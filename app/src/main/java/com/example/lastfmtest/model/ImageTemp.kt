@@ -1,12 +1,10 @@
 package com.example.lastfmtest.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import io.realm.RealmObject
 
-@Parcelize
-data class ImageTemp (
-    @SerializedName("#text") @Expose val text: String,
-    @SerializedName("size") @Expose val size: String
-    ):Parcelable
+open class ImageTemp : RealmObject() {
+    @SerializedName("#text") @Expose var text: String? = null
+    @SerializedName("size") @Expose var size: String? = null
+}
